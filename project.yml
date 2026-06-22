@@ -34,6 +34,7 @@ targets:
         # Standalone watch app: runs without a paired iPhone app.
         WATCHOS_DEPLOYMENT_TARGET: "10.0"
         TARGETED_DEVICE_FAMILY: "4"   # 4 = Apple Watch
+        SKIP_INSTALL: NO
 
 schemes:
   WatchTube:
