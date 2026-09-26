@@ -581,8 +581,17 @@ struct InnerTubeClient {
             "gl": region
         ]
         dict.merge(client.extraContext) { _, new in new }
+        
+        let hasPoToken = poToken != nil && !poToken!.isEmpty
+        let isTVHTML5 = client.clientName == "TVHTML5"
+        
         if !authenticated, let visitorData, !visitorData.isEmpty {
-            dict["visitorData"] = visitorData
+            // TVHTML5 returns UNPLAYABLE if visitorData is provided without a valid poToken.
+            // We omit it here so the API correctly surfaces LOGIN_REQUIRED instead, which
+            // prompts the user to provide a PoToken in settings.
+            if !isTVHTML5 || hasPoToken {
+                dict["visitorData"] = visitorData
+            }
         }
         return dict
     }
@@ -1099,9 +1108,9 @@ private struct PlayerClient {
     /// (e.g. age-restricted) videos when signed in.
     static let tvhtml5 = PlayerClient(
         clientName: "TVHTML5",
-        clientVersion: "7.20250120.19.00",
+        clientVersion: "7.20260707.07.00",
         extraContext: [:],
-        userAgent: "Mozilla/5.0 (PlayStation; PlayStation 4/12.00) AppleWebKit/605.1.15 (KHTML, like Gecko)",
+        userAgent: "Mozilla/5.0 (ChromiumStylePlatform) Cobalt/25.lts.30.1034943-gold (unlike Gecko), Unknown_TV_Unknown_0/Unknown (Unknown, Unknown)",
         apiKey: "AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8"
     )
 }
