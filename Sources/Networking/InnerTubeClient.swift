@@ -480,6 +480,7 @@ struct InnerTubeClient {
         // content — so sign-in can only ever help, never break what works.
         var attempts: [Attempt] = [
             Attempt(client: .ios, useAuth: false),
+            Attempt(client: .visionOS, useAuth: false),
             Attempt(client: .androidVR, useAuth: false),
             Attempt(client: .tvhtml5, useAuth: false)
         ]
@@ -1085,6 +1086,15 @@ private struct PlayerClient {
             "osName": "iPhone", "osVersion": "18.3.2.22D82", "utcOffsetMinutes": 0
         ],
         userAgent: "com.google.ios.youtube/20.10.4 (iPhone16,2; U; CPU iOS 18_3_2 like Mac OS X;)",
+        apiKey: "AIzaSyB-63vPrdThhKuerbB2N_l7Kwwcxj6yUAc"
+    )
+
+    /// Apple Vision Pro client — newly discovered to bypass gating without PoToken.
+    static let visionOS = PlayerClient(
+        clientName: "VISIONOS",
+        clientVersion: "1.04",
+        extraContext: [:],
+        userAgent: "com.google.visionos.youtube/1.04",
         apiKey: "AIzaSyB-63vPrdThhKuerbB2N_l7Kwwcxj6yUAc"
     )
 
